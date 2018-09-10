@@ -4,6 +4,8 @@ Package for laravel TLE - Telegram logger errors
 
 [![Latest Stable Version](https://poser.pugx.org/jackmartin/telegram-logger-errors/v/stable)](https://packagist.org/packages/jackmartin/telegram-logger-errors) [![Total Downloads](https://poser.pugx.org/jackmartin/telegram-logger-errors/downloads)](https://packagist.org/packages/jackmartin/telegram-logger-errors) [![License](https://poser.pugx.org/jackmartin/telegram-logger-errors/license)](https://packagist.org/packages/jackmartin/telegram-logger-errors)
 
+![Image example](https://github.com/martinjack/telegram-logger-errors/blob/master/images/example.png?raw=true)
+
 ## Installation
 
 Run composer require command.
