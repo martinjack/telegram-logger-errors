@@ -3,6 +3,7 @@
     "description": "Telegram logger errors package laravel",
     "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/martinjack/telegram-logger-errors",
     "authors": [
         {
             "name": "Evgen Kytonin",

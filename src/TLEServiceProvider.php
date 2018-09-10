@@ -25,7 +25,7 @@ class TLEServiceProvider extends ServiceProvider
 
             ),
 
-            'telegram-logger-errors',
+            'tle-config',
 
         ]);
 
@@ -38,7 +38,7 @@ class TLEServiceProvider extends ServiceProvider
     public function register()
     {
 
-        $this->app()->bind('tle', function () {
+        $this->app->bind('tle', function () {
 
             return new \TLE\TLESender;
 
