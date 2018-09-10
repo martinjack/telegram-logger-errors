@@ -17,7 +17,7 @@ class TLEServiceProvider extends ServiceProvider
 
             __DIR__ . '/lang',
 
-            'tlemessage'
+            'tle'
 
         );
 
