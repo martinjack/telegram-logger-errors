@@ -24,7 +24,16 @@ Add then alias TLE adding its facade to the aliases array in the same file:
 'TLE' => TLE\Facades\TLEFacade::class
 ```
 
-### Copy file config tle.php in confing folder
+### Copy file config telegram.php, tle.php in confing folder
+
+##### Telegram SDK
+```sh
+php artisan vendor:publish
+```
+Select Provider: Telegram\Bot\Laravel\TelegramServiceProvider
+
+
+##### TLE 
 ```sh
 php artisan vendor:publish
 ```
@@ -35,7 +44,23 @@ or
 php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config"
 ```
 
+#### Set token bot in config/telegram.php
+```php
+'bots'  => [
+    'common' => [
+        'username' => 'Name bot',
+        'token'    => 'Token bot',
+        'commands' => [],
+    ],
+
+],
+'default'  => 'common',
+```
+
 #### Chat ID
+
+Chat ID you can get via chat bot @RawDataBot
+
 ```php
 'chat_id' => ''
 ```
@@ -93,6 +118,14 @@ TLE\TLEServiceProvider::class
 
 ### Копируем файл настроек tle.php в config папку
 
+##### Telegram SDK
+```sh
+php artisan vendor:publish
+```
+Выбираем Provider: Telegram\Bot\Laravel\TelegramServiceProvider
+
+
+##### TLE 
 ```sh
 php artisan vendor:publish
 ```
@@ -101,6 +134,19 @@ php artisan vendor:publish
 или
 ```sh
 php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config"
+```
+
+#### Set token bot in config/telegram.php
+```php
+'bots'  => [
+    'common' => [
+        'username' => 'Name bot',
+        'token'    => 'Token bot',
+        'commands' => [],
+    ],
+
+],
+'default'  => 'common',
 ```
 
 #### Идентификатор чата
