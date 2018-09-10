@@ -5,8 +5,6 @@ use Illuminate\Support\ServiceProvider;
 class TLEServiceProvider extends ServiceProvider
 {
 
-    protected $defer = true;
-
     /**
      * Bootstrap the application events.
      *
@@ -14,6 +12,14 @@ class TLEServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        $this->loadTranslationsFrom(
+
+            __DIR__ . '/lang',
+
+            'tlemessage'
+
+        );
 
         $configPath = __DIR__ . '/config/tle.php';
 
@@ -23,11 +29,10 @@ class TLEServiceProvider extends ServiceProvider
 
                 'tle.php'
 
-            ),
+            )],
 
-            'tle-config',
-
-        ]);
+            'tle-config'
+        );
 
     }
     /**

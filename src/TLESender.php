@@ -55,18 +55,22 @@ class TLESender
         }
         ##
 
-        $this->message .= "<b>Project:&nbsp;</b>" . env('APP_NAME') . "\n";
+        $this->message .= trans('tle::tlemessage.project') . env('APP_NAME') . "\n";
 
-        $this->message .= "<b>Errors:</b>" . $this->error . "\n";
+        $this->message .= trans('tle::tlemessage.error') . $this->error->getMessage() . "\n";
 
-        $this->message .= "<b>Date/time errors</b>" . Carbon::now()->format("Y:d:m H:i") . "\n";
+        $this->message .= trans('tle::tlemessage.date_time') . Carbon::now()->format("Y.d.m H:i:s") . "\n";
 
         ##
         # LOG SAVE
         #
         $this->log_name = 'project_' . env('APP_NAME') . '_' . time() . '.log';
-        //Config::get('tle.path_save')
-        Storage::disk('local')->put(
+
+        Storage::disk(
+
+            Config::get('tle.path_save')
+
+        )->put(
 
             $this->log_name,
 
@@ -93,7 +97,7 @@ class TLESender
 
         Telegram::sendDocument([
 
-            'chat_id'    => '-253596507', //Config::get('tle.chat_id'),
+            'chat_id'    => Config::get('tle.chat_id'),
 
             'parse_mode' => 'html',
 
@@ -114,8 +118,11 @@ class TLESender
         ##
         # DELETE LOG
         #
-        //Config::get('path_log');
-        Storage::disk('local')->delete(
+        Storage::disk(
+
+            Config::get('tle.path_save')
+
+        )->delete(
 
             $this->log_name
 
