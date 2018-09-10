@@ -54,19 +54,16 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 
 ```php
 use TLE;
-dd(
 
-    try {
+try {
 
-        print_r($a);
+print_r($a);
 
-    } catch (\Exception $e) {
+} catch (\Exception $e) {
 
-        TLE::send($e);
+TLE::send($e);
 
-    }
-
-);
+}
 ```
 
 
@@ -125,17 +122,14 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 
 ```php
 use TLE;
-dd(
 
-    try {
+try {
 
-        print_r($a);
+print_r($a);
 
-    } catch (\Exception $e) {
+} catch (\Exception $e) {
 
-        TLE::send($e);
+TLE::send($e);
 
-    }
-
-);
+}
 ```
