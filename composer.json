@@ -1,6 +1,12 @@
 {
     "name": "jackmartin/telegram-logger-errors",
     "description": "Telegram logger errors package laravel",
+    "keywords": [
+        "laravel",
+        "telegram",
+        "logger",
+        "errors"
+    ],
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/martinjack/telegram-logger-errors",
