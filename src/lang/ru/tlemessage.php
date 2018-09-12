@@ -8,6 +8,6 @@ return [
 
     'date_time'          => "<b>Дата/время ошибки:\t</b>",
 
-    'extras_information' => "<b>Доп. инфо:</b>\t",
+    'extras_information' => "<b>Инфо:</b>\t",
 
 ];
