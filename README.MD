@@ -18,11 +18,13 @@ composer require jackmartin/telegram-logger-errors
 
 After updating composer, register the service provider in boostrap\app.php
 ```php
+Telegram\Bot\Laravel\TelegramServiceProvider::class,
 TLE\TLEServiceProvider::class
 ```
 
 Add then alias TLE adding its facade to the aliases array in the same file:
 ```php
+'Telegram' => Telegram\Bot\Laravel\Facades\Telegram::class,
 'TLE' => TLE\Facades\TLEFacade::class
 ```
 
@@ -139,11 +141,13 @@ composer require jackmartin/telegram-logger-errors
 
 После установки пакета с помощью composer, зарегистрируйте сервис пакета в файле bootstrap/app.php:
 ```php
+Telegram\Bot\Laravel\TelegramServiceProvider::class,
 TLE\TLEServiceProvider::class
 ```
 
 Затем для быстрого вызов класса пакета, добавьте псевдоним в этот же файле:
 ```php
+'Telegram' => Telegram\Bot\Laravel\Facades\Telegram::class,
 'TLE' => TLE\Facades\TLEFacade::class
 ```
 
