@@ -46,7 +46,7 @@ or
 php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config"
 ```
 
-#### Set token bot in config/telegram.php
+#### Setting token and name bot in config/telegram.php
 ```php
 'bots'  => [
     'common' => [
@@ -77,6 +77,11 @@ Chat ID you can get via chat bot @RawDataBot
 'path_save' => 'local'
 ```
 
+#### Limit length error message
+```php
+'limit_error_message' => 100
+```
+
 ## Usage
 
 ```php
@@ -88,11 +93,35 @@ print_r($a);
 
 } catch (\Exception $e) {
 
-TLE::send($e);
+TLE::exp($e)->send();
+
+}
+```
+```php
+use TLE;
+
+try {
+
+print_r($a);
+
+} catch (\Exception $e) {
+
+TLE::exp($e)->info('Field check')->send();
 
 }
 ```
 
+### Add class TLE in global handler exception in app\Exceptions\Handler.php
+```php
+public function report(Exception $exception)
+{
+
+    \TLE::exp($exception)->send();
+
+    parent::report($exception);
+
+}
+```
 
 # Telegram logger errors 
 
@@ -138,7 +167,7 @@ php artisan vendor:publish
 php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config"
 ```
 
-#### Set token bot in config/telegram.php
+#### Настройка токена и имя бота в config/telegram.php
 ```php
 'bots'  => [
     'common' => [
@@ -166,6 +195,11 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 'path_save' => 'local'
 ```
 
+#### Лимит длинны ошибки сообщения
+```php
+'limit_error_message' => 100
+```
+
 ## Использование
 
 ```php
@@ -177,7 +211,32 @@ print_r($a);
 
 } catch (\Exception $e) {
 
-TLE::send($e);
+TLE::exp($e)->send();
+
+}
+```
+```php
+use TLE;
+
+try {
+
+print_r($a);
+
+} catch (\Exception $e) {
+
+TLE::exp($e)->info('Field check')->send();
+
+}
+```
+
+### Добавление класса TLE в глобальный обработчик ошибок в app\Exceptions\Handler.php
+```php
+public function report(Exception $exception)
+{
+
+    \TLE::exp($exception)->send();
+
+    parent::report($exception);
 
 }
 ```

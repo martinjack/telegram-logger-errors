@@ -1,5 +1,14 @@
 <?php namespace TLE;
 
+/**
+ *
+ * Class TLEServiceProvider
+ *
+ * @package TLE
+ *
+ * @license MIT
+ *
+ */
 use Illuminate\Support\ServiceProvider;
 
 class TLEServiceProvider extends ServiceProvider

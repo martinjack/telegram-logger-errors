@@ -1,22 +1,41 @@
 <?php namespace TLE;
 
+/**
+ *
+ * Class TLESender
+ *
+ * @package TLE
+ *
+ * @license MIT
+ *
+ */
+
 use Carbon\Carbon;
 use Config;
-use Illuminate\Support\Facades\Log;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 use Telegram;
 use Telegram\Bot\FileUpload\InputFile;
+use TLE\Exceptions\StringsErrors;
 
 class TLESender
 {
     /**
      *
-     * ERROR MESSAGE
+     * EXCEPTION ERROR
+     *
+     * @var EXCEPTION
+     *
+     */
+    private $error = null;
+    /**
+     *
+     * ADDITIONAL INFORMATION
      *
      * @var STRING
      *
      */
-    private $error = null;
+    private $addinfo = null;
     /**
      *
      * MESSAGE
@@ -37,34 +56,62 @@ class TLESender
      *
      * PREPARE SHORT ERROR AND FILE
      *
-     * @param STRING $error
-     *
      * @return VOID
      *
      */
-    private function prepare($error)
+    private function prepare()
     {
 
-        ##
-        $this->error = $error;
+        $error_message = '';
 
-        if (Config::get('tle.save_log')) {
+        $data_file = $this->error . "\n" . $this->addinfo;
 
-            Log::critical($this->error);
+        if ($this->error) {
+
+            if (strlen($this->error->getMessage()) > 100) {
+
+                $error_message .= \Illuminate\Support\Str::limit(
+
+                    $this->error->getMessage(), Config::get('tle.limit_error_message')
+
+                );
+
+            } else {
+
+                $error_message .= $this->error->getMessage();
+
+            }
 
         }
+
+        if ($this->addinfo) {
+
+            $error_message .= "\n" . trans('tle::tlemessage.extras_information') . $this->addinfo;
+
+        }
+
         ##
 
         $this->message .= trans('tle::tlemessage.project') . env('APP_NAME') . "\n";
 
-        $this->message .= trans('tle::tlemessage.error') . $this->error->getMessage() . "\n";
+        $this->message .= trans('tle::tlemessage.error') . $error_message . "\n";
 
         $this->message .= trans('tle::tlemessage.date_time') . Carbon::now()->format("Y.d.m H:i:s") . "\n";
 
         ##
+        # CHECK LENGTH MESSAGE
+        #
+
+        if (strlen($this->message) > 263) {
+
+            throw new StringsErrors('Message max length. Max 263 length');
+
+        }
+
+        ##
         # LOG SAVE
         #
-        $this->log_name = 'project_' . env('APP_NAME') . '_' . time() . '.log';
+        $this->log_name = env('APP_NAME') . '_' . time() . '.log';
 
         Storage::disk(
 
@@ -74,46 +121,119 @@ class TLESender
 
             $this->log_name,
 
-            $this->error
+            $data_file
 
         );
+
+        ##
+        # SAVE ERROR IN APP
+        #
+        if (Config::get('tle.save_log')) {
+
+            \Illuminate\Support\Facades\Log::critical(
+
+                $data_file
+
+            );
+
+        }
+
+    }
+    /**
+     *
+     * EXCEPTION
+     *
+     * @param EXCEPTION
+     *
+     * @return OBJECT
+     *
+     */
+    public function exp(\Exception $error)
+    {
+
+        if (method_exists($error, 'getMessage')) {
+
+            $this->error = $error;
+
+        }
+
+        return $this;
+
+    }
+    /**
+     *
+     * ADDITIONAL INFORMATION
+     *
+     * @param STRING | ARRAY $addinfo
+     *
+     * @return OBJECT
+     *
+     */
+    public function info(String $addinfo)
+    {
+
+        if (strlen($addinfo) < 200) {
+
+            $this->addinfo = $addinfo;
+
+            return $this;
+
+        }
+
+        throw new StringsErrors('Info max long. Max 200 length');
 
     }
     /**
      *
      * SEND LOG
      *
-     * @param STRING  $error
+     * @param EXCEPTION $error
+     *
+     * @param STRING $info
      *
      * @return VOID
      *
      */
-    public function send($error)
+    public function send()
     {
 
+        if ($this->error == null && $this->addinfo == null) {
+
+            throw new StringsErrors('Empty string $error or $addinfo');
+
+        }
+
         #
-        $this->prepare($error);
+        $this->prepare();
         #
 
-        Telegram::sendDocument([
+        try {
 
-            'chat_id'    => Config::get('tle.chat_id'),
+            Telegram::sendDocument([
 
-            'parse_mode' => 'html',
+                'chat_id'    => Config::get('tle.chat_id'),
 
-            'document'   => InputFile::create(
+                'parse_mode' => 'html',
 
-                Storage::disk('local')->path(
+                'document'   => InputFile::create(
 
-                    $this->log_name
+                    Storage::disk('local')->path(
 
-                )
+                        $this->log_name
 
-            ),
+                    )
 
-            'caption'    => $this->message,
+                ),
 
-        ]);
+                'caption'    => $this->message,
+
+            ]);
+
+        } catch (\Telegram\Bot\Exceptions\TelegramResponseException $error) {
+
+            throw new Exception($error);
+
+        }
 
         ##
         # DELETE LOG
@@ -127,7 +247,20 @@ class TLESender
             $this->log_name
 
         );
+        ##
+        # CLEAR
+        #
+        unset(
 
+            $this->message,
+
+            $this->log_name,
+
+            $this->error,
+
+            $this->addinfo
+
+        );
     }
 
 }
