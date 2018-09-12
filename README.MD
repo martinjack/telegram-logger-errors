@@ -61,6 +61,14 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 'default'  => 'common',
 ```
 
+#### Name bot
+
+Need for Telegram SDK
+
+```php
+'botname' => ''
+```
+
 #### Chat ID
 
 Chat ID you can get via chat bot @RawDataBot
@@ -182,6 +190,14 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 
 ],
 'default'  => 'common',
+```
+
+#### Имя бота
+
+Нужно для Telegram SDK
+
+```php
+'botname' => ''
 ```
 
 #### Идентификатор чата
