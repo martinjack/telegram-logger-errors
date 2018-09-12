@@ -209,7 +209,11 @@ class TLESender
 
         try {
 
-            Telegram::sendDocument([
+            Telegram::bot(
+
+                Config::get('tle.botname')
+
+            )->sendDocument([
 
                 'chat_id'    => Config::get('tle.chat_id'),
 
