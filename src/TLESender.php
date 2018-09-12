@@ -106,35 +106,37 @@ class TLESender
 
             throw new StringsErrors('Message max length. Max 263 length');
 
-        }
+        } else {
 
-        ##
-        # LOG SAVE
-        #
-        $this->log_name = env('APP_NAME') . '_' . time() . '.log';
+            ##
+            # LOG SAVE
+            #
+            $this->log_name = env('APP_NAME') . '_' . time() . '.log';
 
-        Storage::disk(
+            Storage::disk(
 
-            Config::get('tle.path_save')
+                Config::get('tle.path_save')
 
-        )->put(
+            )->put(
 
-            $this->log_name,
-
-            $data_file
-
-        );
-
-        ##
-        # SAVE ERROR IN APP
-        #
-        if (Config::get('tle.save_log')) {
-
-            \Illuminate\Support\Facades\Log::critical(
+                $this->log_name,
 
                 $data_file
 
             );
+
+            ##
+            # SAVE ERROR IN APP
+            #
+            if (Config::get('tle.save_log')) {
+
+                \Illuminate\Support\Facades\Log::critical(
+
+                    $data_file
+
+                );
+
+            }
 
         }
 
