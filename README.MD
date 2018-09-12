@@ -151,7 +151,7 @@ TLE\TLEServiceProvider::class
 'TLE' => TLE\Facades\TLEFacade::class
 ```
 
-### Копируем файл настроек tle.php в config папку
+### Копируем файл настроек telegram.php, tle.php в config папку
 
 ##### Telegram SDK
 ```sh
