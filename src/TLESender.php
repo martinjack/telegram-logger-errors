@@ -199,6 +199,17 @@ class TLESender
     public function send()
     {
 
+        ##
+        # CHECK FIELD BOT NAME AND CHAT_ID
+        #
+        if (!Config::get('tle.botname') || !Config::get('tle.chat_id')) {
+
+            throw new \TLE\Exceptions\ConfigErrors('Empty field botname or chat_id');
+
+        }
+        ##
+        # CHECK FIELD DATA
+        #
         if ($this->error == null && $this->addinfo == null) {
 
             throw new StringsErrors('Empty string $error or $addinfo');

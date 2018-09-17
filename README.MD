@@ -36,7 +36,6 @@ php artisan vendor:publish
 ```
 Select Provider: Telegram\Bot\Laravel\TelegramServiceProvider
 
-
 ##### TLE 
 ```sh
 php artisan vendor:publish
@@ -166,7 +165,6 @@ TLE\TLEServiceProvider::class
 php artisan vendor:publish
 ```
 Выбираем Provider: Telegram\Bot\Laravel\TelegramServiceProvider
-
 
 ##### TLE 
 ```sh
