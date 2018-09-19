@@ -72,15 +72,15 @@ class TLESender
 
             if (strlen($this->error->getMessage()) > 100) {
 
-                $error_message .= trans('tle::tlemessage.error') . Str::limit(
+                $error_message .= "\n" . trans('tle::tlemessage.error') . Str::limit(
 
                     $this->error->getMessage(), Config::get('tle.limit_error_message')
 
-                ) . "\n";
+                );
 
             } else {
 
-                $error_message .= trans('tle::tlemessage.error') . $this->error->getMessage() . "\n";
+                $error_message .= "\n" . trans('tle::tlemessage.error') . $this->error->getMessage();
 
             }
 
