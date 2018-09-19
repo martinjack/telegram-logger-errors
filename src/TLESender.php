@@ -13,7 +13,9 @@
 use Carbon\Carbon;
 use Config;
 use Exception;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Telegram;
 use Telegram\Bot\FileUpload\InputFile;
 use TLE\Exceptions\StringsErrors;
@@ -70,15 +72,15 @@ class TLESender
 
             if (strlen($this->error->getMessage()) > 100) {
 
-                $error_message .= \Illuminate\Support\Str::limit(
+                $error_message .= trans('tle::tlemessage.error') . Str::limit(
 
                     $this->error->getMessage(), Config::get('tle.limit_error_message')
 
-                );
+                ) . "\n";
 
             } else {
 
-                $error_message .= $this->error->getMessage();
+                $error_message .= trans('tle::tlemessage.error') . $this->error->getMessage() . "\n";
 
             }
 
@@ -86,15 +88,27 @@ class TLESender
 
         if ($this->addinfo) {
 
-            $error_message .= "\n" . trans('tle::tlemessage.extras_information') . $this->addinfo;
+            if (strlen($this->addinfo) > 100) {
+
+                $error_message .= "\n" . trans('tle::tlemessage.extras_information') . Str::limit(
+
+                    $this->addinfo, Config::get('tle.limit_error_message')
+
+                );
+
+            } else {
+
+                $error_message .= "\n" . trans('tle::tlemessage.extras_information') . $this->addinfo;
+
+            }
 
         }
 
         ##
 
-        $this->message .= trans('tle::tlemessage.project') . env('APP_NAME') . "\n";
+        $this->message .= trans('tle::tlemessage.project') . env('APP_NAME');
 
-        $this->message .= trans('tle::tlemessage.error') . $error_message . "\n";
+        $this->message .= $error_message . "\n";
 
         $this->message .= trans('tle::tlemessage.date_time') . Carbon::now()->format("Y.d.m H:i:s") . "\n";
 
@@ -158,6 +172,23 @@ class TLESender
             $this->error = $error;
 
         }
+
+        return $this;
+
+    }
+    /**
+     *
+     * GUZZLE EXCEPTION
+     *
+     * @param RequestException $error
+     *
+     * @return OBJECT
+     *
+     */
+    public function guzzle(RequestException $error)
+    {
+
+        $this->error = $error->getResponse()->getBody();
 
         return $this;
 
