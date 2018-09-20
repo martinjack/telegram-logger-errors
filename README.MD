@@ -93,6 +93,7 @@ Chat ID you can get via chat bot @RawDataBot
 
 ## Usage
 
+#### Send simple exception
 ```php
 use TLE;
 
@@ -106,6 +107,7 @@ TLE::exp($e)->send();
 
 }
 ```
+#### Send simple exception + information
 ```php
 use TLE;
 
@@ -116,6 +118,20 @@ print_r($a);
 } catch (\Exception $e) {
 
 TLE::exp($e)->info('Field check')->send();
+
+}
+```
+#### Send Guzzle Exception
+```php
+use TLE;
+
+try {
+
+print_r($a);
+
+} catch (RequestException $e) {
+
+TLE::guzzle($e)->send();
 
 }
 ```
@@ -220,6 +236,7 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 
 ## Использование
 
+#### Отправка простого исключения
 ```php
 use TLE;
 
@@ -233,6 +250,7 @@ TLE::exp($e)->send();
 
 }
 ```
+#### Отправка простого исключения + информацию
 ```php
 use TLE;
 
@@ -243,6 +261,20 @@ print_r($a);
 } catch (\Exception $e) {
 
 TLE::exp($e)->info('Field check')->send();
+
+}
+```
+#### Отправка Guzzle исключения
+```php
+use TLE;
+
+try {
+
+print_r($a);
+
+} catch (RequestException $e) {
+
+TLE::guzzle($e)->send();
 
 }
 ```
