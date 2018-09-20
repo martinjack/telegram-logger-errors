@@ -36,7 +36,6 @@ php artisan vendor:publish
 ```
 Select Provider: Telegram\Bot\Laravel\TelegramServiceProvider
 
-
 ##### TLE 
 ```sh
 php artisan vendor:publish
@@ -59,6 +58,14 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 
 ],
 'default'  => 'common',
+```
+
+#### Name bot
+
+Need for Telegram SDK
+
+```php
+'botname' => ''
 ```
 
 #### Chat ID
@@ -86,6 +93,7 @@ Chat ID you can get via chat bot @RawDataBot
 
 ## Usage
 
+#### Send simple exception
 ```php
 use TLE;
 
@@ -99,6 +107,7 @@ TLE::exp($e)->send();
 
 }
 ```
+#### Send simple exception + information
 ```php
 use TLE;
 
@@ -109,6 +118,20 @@ print_r($a);
 } catch (\Exception $e) {
 
 TLE::exp($e)->info('Field check')->send();
+
+}
+```
+#### Send Guzzle Exception
+```php
+use TLE;
+
+try {
+
+print_r($a);
+
+} catch (RequestException $e) {
+
+TLE::guzzle($e)->send();
 
 }
 ```
@@ -159,7 +182,6 @@ php artisan vendor:publish
 ```
 Выбираем Provider: Telegram\Bot\Laravel\TelegramServiceProvider
 
-
 ##### TLE 
 ```sh
 php artisan vendor:publish
@@ -184,6 +206,14 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 'default'  => 'common',
 ```
 
+#### Имя бота
+
+Нужно для Telegram SDK
+
+```php
+'botname' => ''
+```
+
 #### Идентификатор чата
 ```php
 'chat_id' => ''
@@ -206,6 +236,7 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 
 ## Использование
 
+#### Отправка простого исключения
 ```php
 use TLE;
 
@@ -219,6 +250,7 @@ TLE::exp($e)->send();
 
 }
 ```
+#### Отправка простого исключения + информацию
 ```php
 use TLE;
 
@@ -229,6 +261,20 @@ print_r($a);
 } catch (\Exception $e) {
 
 TLE::exp($e)->info('Field check')->send();
+
+}
+```
+#### Отправка Guzzle исключения
+```php
+use TLE;
+
+try {
+
+print_r($a);
+
+} catch (RequestException $e) {
+
+TLE::guzzle($e)->send();
 
 }
 ```
