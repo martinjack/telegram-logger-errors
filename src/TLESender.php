@@ -188,7 +188,15 @@ class TLESender
     public function guzzle(RequestException $error)
     {
 
-        $this->error = $error->getResponse()->getBody();
+        if ($error->hasResponse()) {
+
+            $this->error = (string) $e->getResponse()->getBody();
+
+        } else {
+
+            $this->error = (string) $error->getMessage();
+
+        }
 
         return $this;
 
