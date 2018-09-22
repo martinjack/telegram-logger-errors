@@ -190,7 +190,7 @@ class TLESender
 
         if ($error->hasResponse()) {
 
-            $this->error = (string) $e->getResponse()->getBody();
+            $this->error = (string) $error->getResponse()->getBody();
 
         } else {
 
