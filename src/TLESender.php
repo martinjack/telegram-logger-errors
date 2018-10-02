@@ -56,6 +56,14 @@ class TLESender
     private $log_name = '';
     /**
      *
+     * LIMIT LENGTH MESSAGE
+     *
+     * @var INTEGER
+     *
+     */
+    private $limit_length_message = 0;
+    /**
+     *
      * PREPARE SHORT ERROR AND FILE
      *
      * @return VOID
@@ -74,7 +82,7 @@ class TLESender
 
                 $error_message .= "\n" . trans('tle::tlemessage.error') . Str::limit(
 
-                    $this->error, Config::get('tle.limit_error_message')
+                    $this->error, $this->limit_length_message
 
                 );
 
@@ -88,11 +96,11 @@ class TLESender
 
         if ($this->addinfo) {
 
-            if (strlen($this->addinfo) > 100) {
+            if ($this->error || strlen($this->addinfo) > 100) {
 
                 $error_message .= "\n" . trans('tle::tlemessage.extras_information') . Str::limit(
 
-                    $this->addinfo, Config::get('tle.limit_error_message')
+                    $this->addinfo, $this->limit_length_message
 
                 );
 
@@ -105,20 +113,39 @@ class TLESender
         }
 
         ##
+        # NAME PROJECT
+        #
+        if (strlen(env('APP_NAME')) > 40) {
 
-        $this->message .= trans('tle::tlemessage.project') . env('APP_NAME');
+            $name_project = trans('tle::tlemessage.project') . Str::limit(
+
+                env('APP_NAME'), 40
+
+            );
+
+        } else {
+
+            $name_project = trans('tle::tlemessage.project') . env('APP_NAME');
+
+        }
+
+        $this->message .= $name_project;
+        ##
 
         $this->message .= $error_message . "\n";
 
-        $this->message .= trans('tle::tlemessage.date_time') . Carbon::now()->format("Y.d.m H:i:s") . "\n";
+        $this->message .= trans('tle::tlemessage.date_time') . Carbon::now()->format("d.m.y H:i");
 
         ##
         # CHECK LENGTH MESSAGE
         #
+        if (strlen($this->message) > 200) {
 
-        if (strlen($this->message) > 263) {
+            $this->message = '';
 
-            throw new StringsErrors('Message max length. Max 263 length');
+            $this->limit_length_message -= 10;
+
+            $this->prepare();
 
         } else {
 
@@ -213,7 +240,7 @@ class TLESender
     public function info(String $addinfo)
     {
 
-        if (strlen($addinfo) < 200) {
+        if (strlen($addinfo) < 101) {
 
             $this->addinfo = $addinfo;
 
@@ -221,7 +248,7 @@ class TLESender
 
         }
 
-        throw new StringsErrors('Info max long. Max 200 length');
+        throw new StringsErrors('Info max long. Max 101 length');
 
     }
     /**
@@ -256,6 +283,8 @@ class TLESender
         }
 
         #
+        $this->limit_length_message = Config::get('tle.limit_error_message');
+        #
         $this->prepare();
         #
 
@@ -269,7 +298,7 @@ class TLESender
 
                 'chat_id'    => Config::get('tle.chat_id'),
 
-                'parse_mode' => 'html',
+                'parse_mode' => 'markdown',
 
                 'document'   => InputFile::create(
 
