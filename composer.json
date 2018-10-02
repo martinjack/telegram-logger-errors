@@ -1,6 +1,12 @@
 {
     "name": "jackmartin/telegram-logger-errors",
     "description": "Telegram logger errors package laravel",
+    "keywords": [
+        "laravel",
+        "telegram",
+        "logger",
+        "errors"
+    ],
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/martinjack/telegram-logger-errors",
@@ -12,7 +18,7 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "irazasyed/telegram-bot-sdk": "^3.0"
+        "jackmartin/telegram-bot-sdk": "3.0.*"
     },
     "autoload": {
         "psr-4": {
