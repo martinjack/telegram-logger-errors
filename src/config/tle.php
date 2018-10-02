@@ -7,7 +7,7 @@ return [
     | BOT NAME
     |--------------------------------------------------------------------------
     | Set bot name for Telegram SDK
-    | Укажите имя бот для Telegram SDK
+    | Укажите имя бота для Telegram SDK
     |
      */
     'admin_email'         => '',
