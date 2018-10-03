@@ -298,7 +298,7 @@ class TLESender
 
                 'chat_id'    => Config::get('tle.chat_id'),
 
-                'parse_mode' => 'markdown',
+                'parse_mode' => 'html',
 
                 'document'   => InputFile::create(
 
