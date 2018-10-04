@@ -2,12 +2,12 @@
 
 return [
 
-    'project'            => "<b>Project:</b>\t",
+    'project'            => "*Project:* ",
 
-    'error'              => "<b>Errors:</b>\t",
+    'error'              => "*Errors:* ",
 
-    'date_time'          => "<b>Date/time error:</b>\t",
+    'date_time'          => "*Date/time error:* ",
 
-    'extras_information' => "<b>Info:</b>\t",
+    'extras_information' => "*Info:* ",
 
 ];
