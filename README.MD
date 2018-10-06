@@ -59,6 +59,10 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 ],
 'default'  => 'common',
 ```
+#### Debug mode
+```php
+'debug' => false
+```
 
 #### Name bot
 
@@ -204,6 +208,10 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 
 ],
 'default'  => 'common',
+```
+#### Режим отладки
+```php
+'debug' => false
 ```
 
 #### Имя бота
