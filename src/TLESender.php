@@ -266,6 +266,14 @@ class TLESender
     {
 
         ##
+        # DEBUG MODE
+        #
+        if (Config::get('tle.debug')) {
+
+            return false;
+
+        }
+        ##
         # CHECK FIELD BOT NAME AND CHAT_ID
         #
         if (!Config::get('tle.botname') || !Config::get('tle.chat_id')) {
