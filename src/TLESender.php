@@ -340,20 +340,6 @@ class TLESender
             $this->log_name
 
         );
-        ##
-        # CLEAR
-        #
-        unset(
-
-            $this->message,
-
-            $this->log_name,
-
-            $this->error,
-
-            $this->addinfo
-
-        );
     }
 
 }
