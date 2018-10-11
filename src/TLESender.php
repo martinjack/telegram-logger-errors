@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Telegram;
 use Telegram\Bot\FileUpload\InputFile;
+use TLE\Exceptions\ConfigErrors;
 use TLE\Exceptions\StringsErrors;
 
 class TLESender
@@ -71,11 +72,26 @@ class TLESender
      */
     private function prepare()
     {
-
+        #
         $error_message = '';
-
+        #
         $data_file = $this->error . "\n" . $this->addinfo;
 
+        ##
+        # SAVE ERROR IN APP
+        #
+        if (Config::get('tle.save_log')) {
+
+            \Illuminate\Support\Facades\Log::critical(
+
+                $data_file
+
+            );
+
+        }
+        ##
+        # PREPARE ERROR
+        #
         if ($this->error) {
 
             if (strlen($this->error) > 100) {
@@ -93,7 +109,9 @@ class TLESender
             }
 
         }
-
+        ##
+        # PREPARE ADD INFO
+        #
         if ($this->addinfo) {
 
             if ($this->error || strlen($this->addinfo) > 100) {
@@ -143,6 +161,16 @@ class TLESender
 
             $this->message = '';
 
+            if (!$this->limit_length_message) {
+
+                throw new StringsErros(
+
+                    trans('tle::tlemessage.error_length_message')
+
+                );
+
+            }
+
             $this->limit_length_message -= 10;
 
             $this->prepare();
@@ -165,19 +193,6 @@ class TLESender
                 $data_file
 
             );
-
-            ##
-            # SAVE ERROR IN APP
-            #
-            if (Config::get('tle.save_log')) {
-
-                \Illuminate\Support\Facades\Log::critical(
-
-                    $data_file
-
-                );
-
-            }
 
         }
 
@@ -278,7 +293,11 @@ class TLESender
         #
         if (!Config::get('tle.botname') || !Config::get('tle.chat_id')) {
 
-            throw new \TLE\Exceptions\ConfigErrors('Empty field botname or chat_id');
+            throw new ConfigErrors(
+
+                trans('tle::tlemessage.empty_field_b_chat')
+
+            );
 
         }
         ##
@@ -286,7 +305,11 @@ class TLESender
         #
         if ($this->error == null && $this->addinfo == null) {
 
-            throw new StringsErrors('Empty string $error or $addinfo');
+            throw new StringsErrors(
+
+                trans('tle::tlemessage.empty_string_e_add')
+
+            );
 
         }
 
