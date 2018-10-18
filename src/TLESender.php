@@ -163,7 +163,7 @@ class TLESender
 
             if (!$this->limit_length_message) {
 
-                throw new StringsErros(
+                throw new StringsErrors(
 
                     trans('tle::tlemessage.error_length_message')
 
