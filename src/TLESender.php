@@ -157,7 +157,7 @@ class TLESender
         ##
         # CHECK LENGTH MESSAGE
         #
-        if (strlen($this->message) > 200) {
+        if (strlen($this->message) > 1024) {
 
             $this->message = '';
 
