@@ -90,11 +90,6 @@ Chat ID you can get via chat bot @RawDataBot
 'path_save' => 'local'
 ```
 
-#### Limit length error message
-```php
-'limit_error_message' => 100
-```
-
 ## Usage
 
 #### Send simple exception
@@ -236,12 +231,6 @@ php artisan vendor:publish --provider="TLE\TLEServiceProvider" --tag="tle-config
 ```php
 'path_save' => 'local'
 ```
-
-#### Лимит длинны ошибки сообщения
-```php
-'limit_error_message' => 100
-```
-
 ## Использование
 
 #### Отправка простого исключения
