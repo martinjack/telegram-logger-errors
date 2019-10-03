@@ -158,20 +158,10 @@ class TLESender
         # CHECK LENGTH MESSAGE
         #
         if (strlen($this->message) > 1024) {
-
-            $this->message = '';
-
-            if (!$this->limit_length_message) {
-
-                throw new StringsErrors(
-
-                    trans('tle::tlemessage.error_length_message')
-
-                );
-
-            }
-
-            $this->limit_length_message -= 10;
+            ##
+            # Limit message
+            #
+            $this->message = Str::limit($this->message, 1000);
 
             $this->prepare();
 
