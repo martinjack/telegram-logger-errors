@@ -1,15 +1,9 @@
-<?php namespace TLE;
+<?php
 
-/**
- *
- * Class TLEServiceProvider
- *
- * @package TLE
- *
- * @license MIT
- *
- */
+namespace TLE;
+
 use Illuminate\Support\ServiceProvider;
+use \TLESender;
 
 class TLEServiceProvider extends ServiceProvider
 {
@@ -54,7 +48,7 @@ class TLEServiceProvider extends ServiceProvider
 
         $this->app->bind('tle', function () {
 
-            return new \TLE\TLESender;
+            return new TLESender;
 
         });
 

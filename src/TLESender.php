@@ -1,14 +1,6 @@
-<?php namespace TLE;
+<?php
 
-/**
- *
- * Class TLESender
- *
- * @package TLE
- *
- * @license MIT
- *
- */
+namespace TLE;
 
 use Carbon\Carbon;
 use Config;
@@ -20,9 +12,12 @@ use Telegram;
 use Telegram\Bot\FileUpload\InputFile;
 use TLE\Exceptions\ConfigErrors;
 use TLE\Exceptions\StringsErrors;
+use \Illuminate\Support\Facades\Log;
+use \Telegram\Bot\Exceptions\TelegramResponseException;
 
 class TLESender
 {
+
     /**
      *
      * EXCEPTION ERROR
@@ -72,17 +67,16 @@ class TLESender
      */
     private function prepare()
     {
-        #
+
         $error_message = '';
-        #
-        $data_file = $this->error . "\n" . $this->addinfo;
+        $data_file     = $this->error . "\n" . $this->addinfo;
 
         ##
         # SAVE ERROR IN APP
         #
         if (Config::get('tle.save_log')) {
 
-            \Illuminate\Support\Facades\Log::critical(
+            Log::critical(
 
                 $data_file
 
@@ -206,7 +200,7 @@ class TLESender
      * @return OBJECT
      *
      */
-    public function exp(\Exception $error)
+    public function exp(Exception $error)
     {
 
         if (method_exists($error, 'getMessage')) {
@@ -345,7 +339,7 @@ class TLESender
 
             ]);
 
-        } catch (\Telegram\Bot\Exceptions\TelegramResponseException $error) {
+        } catch (TelegramResponseException $error) {
 
             throw new Exception($error);
 

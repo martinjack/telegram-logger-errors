@@ -1,14 +1,7 @@
-<?php namespace TLE\Exceptions;
+<?php
 
-/**
- *
- * Class StringsErrors
- *
- * @package TLE\Exception
- *
- * @license MIT
- *
- */
+namespace TLE\Exceptions;
+
 class ConfigErrors extends \TLE\Exception
 {
 }
