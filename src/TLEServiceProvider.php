@@ -3,7 +3,7 @@
 namespace TLE;
 
 use Illuminate\Support\ServiceProvider;
-use \TLESender;
+use TLE\TLESender;
 
 class TLEServiceProvider extends ServiceProvider
 {

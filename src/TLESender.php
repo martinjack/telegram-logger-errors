@@ -6,14 +6,14 @@ use Carbon\Carbon;
 use Config;
 use Exception;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Telegram;
+use Telegram\Bot\Exceptions\TelegramResponseException;
 use Telegram\Bot\FileUpload\InputFile;
 use TLE\Exceptions\ConfigErrors;
 use TLE\Exceptions\StringsErrors;
-use \Illuminate\Support\Facades\Log;
-use \Telegram\Bot\Exceptions\TelegramResponseException;
 
 class TLESender
 {
