@@ -60,6 +60,14 @@ class TLESender
     private $limit_length_message = 0;
     /**
      *
+     * APP NAME
+     *
+     * @var STRING
+     *
+     */
+    private $appName = null;
+    /**
+     *
      * PREPARE SHORT ERROR AND FILE
      *
      * @return VOID
@@ -69,7 +77,15 @@ class TLESender
     {
 
         $error_message = '';
-        $data_file     = $this->error . "\n" . $this->addinfo;
+        $data_file     = sprintf(
+
+            "%s\n%s",
+
+            $this->error,
+
+            $this->addinfo
+
+        );
 
         ##
         # SAVE ERROR IN APP
@@ -90,15 +106,31 @@ class TLESender
 
             if (strlen($this->error) > 100) {
 
-                $error_message .= "\n" . trans('tle::tlemessage.error') . Str::limit(
+                $error_message .= sprintf(
 
-                    $this->error, $this->limit_length_message
+                    "\n%s%s",
+
+                    trans('tle::tlemessage.error'),
+
+                    Str::limit(
+
+                        $this->error, $this->limit_length_message
+
+                    )
 
                 );
 
             } else {
 
-                $error_message .= "\n" . trans('tle::tlemessage.error') . $this->error;
+                $error_message .= sprintf(
+
+                    "\n%s%s",
+
+                    trans('tle::tlemessage.error'),
+
+                    $this->error
+
+                );
 
             }
 
@@ -110,15 +142,31 @@ class TLESender
 
             if ($this->error || strlen($this->addinfo) > 100) {
 
-                $error_message .= "\n" . trans('tle::tlemessage.extras_information') . Str::limit(
+                $error_message .= sprintf(
 
-                    $this->addinfo, $this->limit_length_message
+                    "\n%s%s",
+
+                    trans('tle::tlemessage.extras_information'),
+
+                    Str::limit(
+
+                        $this->addinfo, $this->limit_length_message
+
+                    )
 
                 );
 
             } else {
 
-                $error_message .= "\n" . trans('tle::tlemessage.extras_information') . $this->addinfo;
+                $error_message .= sprintf(
+
+                    "\n%s%s",
+
+                    trans('tle::tlemessage.extras_information'),
+
+                    $this->addinfo
+
+                );
 
             }
 
@@ -127,26 +175,28 @@ class TLESender
         ##
         # NAME PROJECT
         #
-        if (strlen(env('APP_NAME')) > 40) {
+        $this->setAppName();
 
-            $name_project = trans('tle::tlemessage.project') . Str::limit(
-
-                env('APP_NAME'), 40
-
-            );
-
-        } else {
-
-            $name_project = trans('tle::tlemessage.project') . env('APP_NAME');
-
-        }
-
-        $this->message .= $name_project;
+        $this->message .= $this->appName;
         ##
 
-        $this->message .= $error_message . "\n";
+        $this->message .= sprintf(
 
-        $this->message .= trans('tle::tlemessage.date_time') . Carbon::now()->format("d.m.y H:i");
+            "%s\n",
+
+            $error_message
+
+        );
+
+        $this->message .= sprintf(
+
+            '%s%s',
+
+            trans('tle::tlemessage.date_time'),
+
+            Carbon::now()->format("d.m.y H:i")
+
+        );
 
         ##
         # CHECK LENGTH MESSAGE
@@ -164,7 +214,17 @@ class TLESender
             ##
             # LOG SAVE
             #
-            $this->log_name = env('APP_NAME') . '_' . time() . '.log';
+            $this->log_name = sprintf(
+
+                '%s_%s%s',
+
+                $this->appName,
+
+                time(),
+
+                '.log'
+
+            );
 
             Storage::disk(
 
@@ -347,6 +407,79 @@ class TLESender
             $this->log_name
 
         );
+    }
+    /**
+     *
+     * SET APP NAME
+     *
+     * @return VOID
+     *
+     */
+    private function setAppName(): void
+    {
+
+        if (Config::get('tle.app_name')) {
+
+            if (strlen(Config::get('tle.app_name')) > 40) {
+
+                $this->appName = sprintf(
+
+                    '%s%s',
+
+                    trans('tle::tlemessage.project'),
+
+                    Str::limit(
+
+                        Config::get('tle.app_name'), 40
+
+                    )
+
+                );
+
+            } else {
+
+                $this->appName = sprintf(
+
+                    '%s%s',
+
+                    trans('tle::tlemessage.project'),
+
+                    Config::get('tle.app_name')
+
+                );
+
+            }
+
+        } else if (strlen(env('APP_NAME')) > 40) {
+
+            $this->appName = sprintf(
+
+                '%s%s',
+
+                trans('tle::tlemessage.project'),
+
+                Str::limit(
+
+                    env('APP_NAME'), 40
+
+                )
+
+            );
+
+        } else {
+
+            $this->appName = sprintf(
+
+                '%s%s',
+
+                trans('tle::tlemessage.project'),
+
+                env('APP_NAME')
+
+            );
+
+        }
+
     }
 
 }

@@ -1,4 +1,6 @@
-<?php namespace TLE;
+<?php
+
+namespace TLE;
 
 /**
  *

@@ -11,7 +11,8 @@ class TLEServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application events.
      *
-     * @return void
+     * @return VOID
+     *
      */
     public function boot()
     {
@@ -41,7 +42,8 @@ class TLEServiceProvider extends ServiceProvider
     /**
      * Register the service provider.
      *
-     * @return void
+     * @return VOID
+     *
      */
     public function register()
     {
