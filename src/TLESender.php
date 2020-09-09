@@ -175,9 +175,7 @@ class TLESender
         ##
         # NAME PROJECT
         #
-        $this->setAppName();
-
-        $this->message .= $this->appName;
+        $this->message .= $this->getAppName();
         ##
 
         $this->message .= sprintf(
@@ -410,41 +408,47 @@ class TLESender
     }
     /**
      *
-     * SET APP NAME
+     * GET APP NAME
      *
-     * @return VOID
+     * @return STRING
      *
      */
-    private function setAppName(): void
+    private function getAppName(): string
     {
+
+        $name = null;
 
         if (Config::get('tle.app_name')) {
 
             if (strlen(Config::get('tle.app_name')) > 40) {
 
-                $this->appName = sprintf(
+                $this->appName = Str::limit(
+
+                    Config::get('tle.app_name'), 40
+
+                );
+
+                $name = sprintf(
 
                     '%s%s',
 
                     trans('tle::tlemessage.project'),
 
-                    Str::limit(
-
-                        Config::get('tle.app_name'), 40
-
-                    )
+                    $this->appName
 
                 );
 
             } else {
 
-                $this->appName = sprintf(
+                $this->appName = Config::get('tle.app_name');
+
+                $name = sprintf(
 
                     '%s%s',
 
                     trans('tle::tlemessage.project'),
 
-                    Config::get('tle.app_name')
+                    $this->appName
 
                 );
 
@@ -452,33 +456,39 @@ class TLESender
 
         } else if (strlen(env('APP_NAME')) > 40) {
 
-            $this->appName = sprintf(
+            $this->appName = Str::limit(
+
+                env('APP_NAME'), 40
+
+            );
+
+            $name = sprintf(
 
                 '%s%s',
 
                 trans('tle::tlemessage.project'),
 
-                Str::limit(
-
-                    env('APP_NAME'), 40
-
-                )
+                $this->appName
 
             );
 
         } else {
 
-            $this->appName = sprintf(
+            $this->appName = env('APP_NAME');
+
+            $name = sprintf(
 
                 '%s%s',
 
                 trans('tle::tlemessage.project'),
 
-                env('APP_NAME')
+                $this->appName
 
             );
 
         }
+
+        return $name;
 
     }
 
