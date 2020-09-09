@@ -16,7 +16,7 @@ composer require jackmartin/telegram-logger-errors
 
 ### Laravel Setting
 
-After updating composer, register the service provider in boostrap\app.php
+After updating composer, register the service provider in config\app.php
 ```php
 Telegram\Bot\Laravel\TelegramServiceProvider::class,
 TLE\TLEServiceProvider::class
@@ -161,7 +161,7 @@ composer require jackmartin/telegram-logger-errors
 
 ### Laravel Настройка
 
-После установки пакета с помощью composer, зарегистрируйте сервис пакета в файле bootstrap/app.php:
+После установки пакета с помощью composer, зарегистрируйте сервис пакета в файле config/app.php:
 ```php
 Telegram\Bot\Laravel\TelegramServiceProvider::class,
 TLE\TLEServiceProvider::class
