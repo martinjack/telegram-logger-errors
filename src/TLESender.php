@@ -325,7 +325,7 @@ class TLESender
         ##
         # DEBUG MODE
         #
-        if (Config::get('tle.debug') || Config::get('app.debug')) {
+        if (Config::get('tle.debug')) {
 
             return false;
 
