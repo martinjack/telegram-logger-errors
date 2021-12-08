@@ -389,7 +389,11 @@ class TLESender
 
         } catch (TelegramResponseException $error) {
 
-            throw new Exception($error);
+            if (Config::get('tle.disable_exception_telegram')) {
+
+                throw new Exception($error);
+
+            }
 
         }
 
